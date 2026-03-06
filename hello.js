@@ -12,7 +12,7 @@ const db = [
     id: 2,
     userName: "sam",
     admin: false,
-    isBlocked: true,
+    isBlocked: false,
     balance: 5000,
   },
   {
@@ -42,7 +42,9 @@ let transactionHistory = [];
 let sendMoney = (fromId, toId, amount) => {
   let sender = db.find((user) => user.userName === fromId);
   let receiver = db.find((user) => user.userName === toId);
-  if (
+  if (typeof sender !== "object" || typeof receiver !== "object") {
+    return "TRANSACTIOM FAILED: ONE OR BOTH USERS NOT FOUND";
+  } else if (
     typeof sender === "object" &&
     typeof receiver === "object" &&
     sender.isBlocked === false &&
@@ -61,15 +63,19 @@ let sendMoney = (fromId, toId, amount) => {
       transactionHistory.push(receipt);
       return `TRANSACTION SUCCESSFUL: ${sender.userName} HAS SUCCESSFULLY SENT ${amount} TO ${receiver.userName};`;
     }
-  } else if (sender.isBlocked || receiver.isBlocked) {
+  } else if (sender.isBlocked === true || receiver.isBlocked === true) {
     return "TRANSACTION FAILED: ONE OR BOTH USERS ARE BLOCKED";
   } else if (sender.balance < amount) {
     return "INSUFFICIENT FUNDS";
-  } else return "transaction failed";
+  }
+  return "transaction failed";
 };
+
 console.log(transactionHistory);
 console.log(getUser("zane", 1));
+console.log(getUser("sam", 2));
 console.log(sendMoney("zane", "sam", 500));
 console.log(getUser("zane", 1));
-console.log(getUser("sam", 2));
+console.log(toggleBlock("zane", 1));
+console.log(sendMoney("zanev", "sam", 1000));
 console.log(transactionHistory);
