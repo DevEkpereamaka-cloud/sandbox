@@ -3,8 +3,8 @@
 const { Readline } = require("readline/promises");
 
 const readline = require("readline").createInterface({
-  input: proccess.stdin,
-  outp: process.stdout,
+  input: process.stdin,
+  output: process.stdout,
 });
 const calculator = () => {
   readline.question("Pick a number: ", (num1) => {
