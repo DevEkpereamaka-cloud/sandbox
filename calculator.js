@@ -11,12 +11,7 @@ const substract = (a, b) => {
 const multiply = (a, b) => {
   return a * b;
 };
-const division = (a, b) => {
-  if (b === 0) {
-    return "ERROR: Division by Zero";
-  }
-  return a / b;
-};
+const division = (a, b) => (b === 0 ? "ERROR CANT DIVIDE BY ZERO: " : a / b);
 
 let calculate = (num1, num2, operator) => {
   if (typeof num1 !== "number" || typeof num2 !== "number") {
